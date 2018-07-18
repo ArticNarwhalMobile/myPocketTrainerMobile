@@ -1,4 +1,6 @@
 rootProject.name = 'myPocketTrainerMobile'
+include ':amazon-cognito-identity-js'
+project(':amazon-cognito-identity-js').projectDir = new File(rootProject.projectDir, '../node_modules/amazon-cognito-identity-js/android')
 include ':react-native-aws-cognito-js'
 project(':react-native-aws-cognito-js').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-aws-cognito-js/android')
 
