@@ -28,13 +28,14 @@ class SignUpScreen extends Component {
       email: '',
       lastName: '',
       attributeList : [],
-      password: "null"
+      password: "null",
+      routeToConfirm: false
     }
   }
 
   userPool;
-  email = 'hnguyen31@gmail.com';
-  password = 'Pa$$w0rd';
+  // email = 'hnguyen31@gmail.com';
+  // password = 'Pa$$w0rd';
 
   componentDidMount() {
     console.log('component did mount')
@@ -64,6 +65,7 @@ class SignUpScreen extends Component {
       }
       cognitoUser = result.user;
       console.log('cognitoUser', cognitoUser)
+      this.props.navigation.navigate('Confirm')
     })
   }
 
@@ -97,6 +99,75 @@ class SignUpScreen extends Component {
   }
 }
 
+class ConfirmScreen extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      num1: 0,
+      num2: 0,
+      num3: 0,
+      num4: 0,
+      num5: 0,
+      num6: 0
+    }
+  }
+
+  componentDidMount() {
+    console.log('component didt mount', this.userPool)
+    //create user pool
+    this.userPool = newCognitoUserPool({
+              UserPoolId: 'us-east-1_QcG34GN2z',
+        ClientId: '7vt0o78qu344uisrulvv30uj3c'
+    })
+    console.log('this.userpool', this.userPool)
+  }
+  //   componentDidMount() {
+//     console.log('component did mount', this.userPool)
+//     //1) Create User Pool
+//     this.userPool = new CognitoUserPool({
+//         UserPoolId: 'us-east-1_QcG34GN2z',
+//         ClientId: '7vt0o78qu344uisrulvv30uj3c'
+//     })
+
+//     console.log('this.userpool', this.userPool)
+//   }
+  confirmCode() {
+    const cognitoUser = new CognitoUser({
+      Username: this.username
+    })
+  }
+
+  //   confirmCode() {
+//     const cognitoUser = new CognitoUser({
+//       Username: this.username,
+//       Pool: this.userPool
+//     });
+//     cognitoUser.confirmRegistration('104055', true, (err, result) => {
+//       if (err) {
+//         console.log('Error at confirmRegistration ', err);
+//         return;
+//       }
+//       console.log('result', result)
+//     });
+//   }
+
+  render() {
+    return(
+      <View>
+        <Text>Please enter your confirmation code</Text>
+      <TextInput onChange={() => this.setState({num1})} placeholder="apple"/>
+      <TextInput onChange={() => this.setState({num2})} placeholder="apple"/>
+      <TextInput onChange={() => this.setState({num3})} placeholder="apple"/>
+      <TextInput onChange={() => this.setState({num4})} placeholder="apple"/>
+      <TextInput onChange={() => this.setState({num5})} placeholder="apple"/>
+      <TextInput onChange={() => this.setState({num6})} placeholder="apple"/>
+      <Button
+      onPress={this.handleSubmit}
+      />
+      </View>
+    )
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -137,7 +208,8 @@ class SignInScreen extends React.Component {
 const RootStack = createStackNavigator(
   {
     SignUp: SignUpScreen,
-    SignIn: SignInScreen
+    SignIn: SignInScreen,
+    Confirm: ConfirmScreen
   },
   {
     initialRouteName: 'SignUp'
