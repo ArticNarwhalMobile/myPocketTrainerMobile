@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { createStackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 
 
@@ -110,31 +112,36 @@ class ConfirmScreen extends React.Component {
       num5: 0,
       num6: 0
     }
+
+    this.confirmCode = this.confirmCode.bind(this);
   }
 
+  userPool;
+
   componentDidMount() {
-    console.log('component didt mount', this.userPool)
+    console.log('component did mount', this.userPool)
     //create user pool
-    this.userPool = newCognitoUserPool({
-              UserPoolId: 'us-east-1_QcG34GN2z',
+    this.userPool = new CognitoUserPool({
+        UserPoolId: 'us-east-1_QcG34GN2z',
         ClientId: '7vt0o78qu344uisrulvv30uj3c'
     })
     console.log('this.userpool', this.userPool)
   }
-  //   componentDidMount() {
-//     console.log('component did mount', this.userPool)
-//     //1) Create User Pool
-//     this.userPool = new CognitoUserPool({
-//         UserPoolId: 'us-east-1_QcG34GN2z',
-//         ClientId: '7vt0o78qu344uisrulvv30uj3c'
-//     })
 
-//     console.log('this.userpool', this.userPool)
-//   }
   confirmCode() {
     const cognitoUser = new CognitoUser({
-      Username: this.username
+      Username: this.username,
+      Pool: this.userPool
     })
+    let code = ''
+    code += this.state.num1
+    code += this.state.num2
+    code += this.state.num3
+    code += this.state.num4
+    code += this.state.num5
+    code += this.state.num6
+    console.log('code',code)
+    // cognitoUser.confirmRegistration()
   }
 
   //   confirmCode() {
@@ -162,7 +169,8 @@ class ConfirmScreen extends React.Component {
       <TextInput onChange={() => this.setState({num5})} placeholder="apple"/>
       <TextInput onChange={() => this.setState({num6})} placeholder="apple"/>
       <Button
-      onPress={this.handleSubmit}
+      title="submit"
+      onPress={this.confirmCode}
       />
       </View>
     )
@@ -218,7 +226,13 @@ const RootStack = createStackNavigator(
 
 export default class App extends React.Component{
   render() {
-    return <RootStack/>
+    return (
+      <Provider store={store}>
+         <RootStack/>
+      </Provider>
+           
+    )
+    
   }
 }
 
