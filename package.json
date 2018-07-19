@@ -11,7 +11,9 @@
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-aws-cognito-js": "0.0.7",
-    "react-navigation": "^2.7.0"
+    "react-navigation": "^2.7.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "babel-jest": "23.4.0",
