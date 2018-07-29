@@ -11,6 +11,7 @@
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-aws-cognito-js": "0.0.7",
+    "react-native-confirmation-code-input": "^1.0.4",
     "react-navigation": "^2.7.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0"
