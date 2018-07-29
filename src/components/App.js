@@ -31,14 +31,15 @@ const instructions = Platform.select({
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-const ConfirmStack = createStackNavigator({
-  Confirm: { screen: ConfirmScreen }
+const SignUpConfirmStack = createStackNavigator({
+  SignUp: SignUpScreen,
+  Confirm: ConfirmScreen
 });
 
 
 const RootStack = TabNavigator(
   {
-    SignUp: SignUpScreen,
+    SignUp: SignUpConfirmStack,
     SignIn: SignInScreen,
   },
   {
