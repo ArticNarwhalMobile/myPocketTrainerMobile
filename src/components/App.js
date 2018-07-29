@@ -8,11 +8,12 @@ import {
   TextInput
 } from 'react-native';
 import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import { createStackNavigator } from 'react-navigation';
+import { TabNavigator, TabBarBottom, createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
 import ConfirmScreen from './authentication/ConfirmScreen.js'
 import SignInScreen from './authentication/SignInScreen.js'
+import SignUpScreen from './authentication/SignUpScreen.js'
 
 
 
@@ -25,100 +26,31 @@ const instructions = Platform.select({
 
 
 
-class SignUpScreen extends Component {
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      lastName: '',
-      attributeList : [],
-      password: "null",
-      routeToConfirm: false
-    }
-  }
-
-  userPool;
-  // email = 'hnguyen31@gmail.com';
-  // password = 'Pa$$w0rd';
-
-  componentDidMount() {
-    console.log('component did mount')
-    //create user pool
-    this.userPool = new CognitoUserPool({
-      UserPoolId:'us-east-1_QcG34GN2z',
-      ClientId: '7vt0o78qu344uisrulvv30uj3c'
-    })
-  }
-
-  createUserInAmazonCognito() {
-    console.log('create user in amazon invoked')
-    const attributeGivenName = new CognitoUserAttribute({
-      Name: 'given_name',
-      Value: this.state.lastName
-    })
-
-    this.state.attributeList.push(attributeGivenName);
-
-    var cognitoUser;
-
-    //call signup function
-    this.userPool.signUp(this.state.email, this.state.password, this.state.attributeList, null, (err, result) => {
-      if (err) {
-        console.log('error at signup', err);
-        return
-      }
-      cognitoUser = result.user;
-      console.log('cognitoUser', cognitoUser)
-      this.props.navigation.navigate('Confirm')
-    })
-  }
-
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TextInput
-      placeholder="Email"
-      onChangeText={(email) => this.setState({email})}
-      />
-      <TextInput
-      placeholder="Last Name"
-      onChangeText={(lastName) => this.setState({lastName})}
-      />
-      <TextInput
-      placeholder="Password"
-      secureTextEntry={true}
-      onChangeText={(password) => this.setState({password})}
-      />
-      <Button 
-      title="Already a member? Sign in instead!"
-      onPress={() => this.props.navigation.navigate('SignIn')}
-      >
-      </Button>
-      <Button
-      title="Sign Up"
-      onPress={() => this.createUserInAmazonCognito()}
-      />
-    </View>
-    )
-  }
-}
-
 
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+const ConfirmStack = createStackNavigator({
+  Confirm: { screen: ConfirmScreen }
+});
 
 
-
-const RootStack = createStackNavigator(
+const RootStack = TabNavigator(
   {
     SignUp: SignUpScreen,
     SignIn: SignInScreen,
-    Confirm: ConfirmScreen
   },
   {
-    initialRouteName: 'SignUp'
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+    animationEnabled: false,
+    swipeEnabled: false,
+  
   }
 )
 

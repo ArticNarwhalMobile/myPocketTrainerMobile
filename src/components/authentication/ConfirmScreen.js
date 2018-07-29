@@ -8,6 +8,8 @@ import {
   TextInput
 } from 'react-native';
 import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import CodeInput from 'react-native-confirmation-code-input';
+
 
 
 export default class ConfirmScreen extends React.Component {
@@ -77,10 +79,23 @@ export default class ConfirmScreen extends React.Component {
         <TextInput onChange={() => this.setState({num4})} placeholder="apple"/>
         <TextInput onChange={() => this.setState({num5})} placeholder="apple"/>
         <TextInput onChange={() => this.setState({num6})} placeholder="apple"/>
-        <Button
-        title="submit"
-        onPress={this.confirmCode}
-        />
+      
+    <CodeInput
+      ref="codeInputRef2"
+      secureTextEntry
+      compareWithCode='123456'
+      activeColor='black'
+      inactiveColor='rgba(49, 180, 4, 1.3)'
+      autoFocus={false}
+      ignoreCase={true}
+      inputPosition='center'
+      size={50}
+      codeLength={6}
+      onFulfill={(isValid) => this._onFinishCheckingCode1(isValid)}
+      containerStyle={{ marginTop: 30 }}
+      codeInputStyle={{ borderWidth: 1.5 }}
+    />
+    
         </View>
       )
     }
