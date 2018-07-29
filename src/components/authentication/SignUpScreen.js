@@ -91,11 +91,11 @@ export default class SignUpScreen extends React.Component {
        >
          <Text> Sign Up </Text>
        </TouchableOpacity>
-        <Button 
+        {/* <Button 
         title="Already a member? Sign in instead!"
         color="#841584"
         onPress={() => this.props.navigation.navigate('SignIn')}
-        />
+        /> */}
         
       </View>
       )
