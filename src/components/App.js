@@ -1,9 +1,9 @@
-import React from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
+import React from 'react';
 import {
   Platform
 } from 'react-native';
-import { TabNavigator, TabBarBottom, createStackNavigator } from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react-navigation';
-import { Provider } from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux';
+import { TabNavigator, TabBarBottom, createStackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
 import { store } from '../store/store';
 import ConfirmScreen from './authentication/ConfirmScreen'
 import SignInScreen from './authentication/SignInScreen'

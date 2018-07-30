@@ -1,27 +1,22 @@
-import React from '../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
+import React from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View,
   Button,
   TextInput
 } from 'react-native';
-import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
 import CodeInput from 'react-native-confirmation-code-input';
+import {connect} from 'react-redux';
+import {store} from '../../store/store';
 
 
 
-export default class ConfirmScreen extends React.Component {
+class ConfirmScreen extends React.Component {
     constructor() {
       super();
       this.state = {
-        num1: 0,
-        num2: 0,
-        num3: 0,
-        num4: 0,
-        num5: 0,
-        num6: 0
+        passcode: null
       }
   
       this.confirmCode = this.confirmCode.bind(this);
@@ -39,20 +34,20 @@ export default class ConfirmScreen extends React.Component {
       console.log('this.userpool', this.userPool)
     }
   
-    confirmCode() {
+    confirmCode(passcode) {
+      console.log('confirmcode invoked')
       const cognitoUser = new CognitoUser({
-        Username: this.username,
+        Username: this.props.email,
         Pool: this.userPool
       })
-      let code = ''
-      code += this.state.num1
-      code += this.state.num2
-      code += this.state.num3
-      code += this.state.num4
-      code += this.state.num5
-      code += this.state.num6
-      console.log('code',code)
-      // cognitoUser.confirmRegistration()
+     
+      cognitoUser.confirmRegistration(passcode, true, (err, result) => {
+        if (err) {
+          console.log('Error at confirmRegistration ', err);
+          return;
+        }
+        console.log('result', result)
+      })
     }
   
     //   confirmCode() {
@@ -70,20 +65,22 @@ export default class ConfirmScreen extends React.Component {
   //   }
   
     render() {
+      console.log('passcode', this.state.passcode)
+      console.log('this.props', this.props)
       return(
         <View>
           <Text>Please enter your confirmation code</Text>
-        <TextInput onChange={() => this.setState({num1})} placeholder="apple"/>
+        {/* <TextInput onChange={() => this.setState({num1})} placeholder="apple"/>
         <TextInput onChange={() => this.setState({num2})} placeholder="apple"/>
         <TextInput onChange={() => this.setState({num3})} placeholder="apple"/>
         <TextInput onChange={() => this.setState({num4})} placeholder="apple"/>
         <TextInput onChange={() => this.setState({num5})} placeholder="apple"/>
-        <TextInput onChange={() => this.setState({num6})} placeholder="apple"/>
+        <TextInput onChange={() => this.setState({num6})} placeholder="apple"/> */}
       
     <CodeInput
       ref="codeInputRef2"
       secureTextEntry
-      compareWithCode='123456'
+      // compareWithCode='123456'
       activeColor='black'
       inactiveColor='rgba(49, 180, 4, 1.3)'
       autoFocus={false}
@@ -91,7 +88,7 @@ export default class ConfirmScreen extends React.Component {
       inputPosition='center'
       size={50}
       codeLength={6}
-      onFulfill={(isValid) => this._onFinishCheckingCode1(isValid)}
+      onFulfill={(passcode) => {this.confirmCode(passcode)}}
       containerStyle={{ marginTop: 30 }}
       codeInputStyle={{ borderWidth: 1.5 }}
     />
@@ -100,3 +97,11 @@ export default class ConfirmScreen extends React.Component {
       )
     }
   }
+
+  const mapStateToProps = state => {
+    console.log(state);
+    const {email} = state.payload
+    return {email};
+  }
+
+  export default connect(mapStateToProps, null)(ConfirmScreen)
