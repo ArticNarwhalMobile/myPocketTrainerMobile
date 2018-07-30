@@ -1,19 +1,13 @@
-import React, { Component } from 'react';
+import React from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput
+  Platform
 } from 'react-native';
-import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import { TabNavigator, TabBarBottom, createStackNavigator } from 'react-navigation';
-import { Provider } from 'react-redux';
+import { TabNavigator, TabBarBottom, createStackNavigator } from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react-navigation';
+import { Provider } from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux';
 import { store } from '../store/store';
-import ConfirmScreen from './authentication/ConfirmScreen.js'
-import SignInScreen from './authentication/SignInScreen.js'
-import SignUpScreen from './authentication/SignUpScreen.js'
+import ConfirmScreen from './authentication/ConfirmScreen'
+import SignInScreen from './authentication/SignInScreen'
+import SignUpScreen from './authentication/SignUpScreen'
 
 
 
