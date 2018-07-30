@@ -1,4 +1,4 @@
-import React from "../../../../../Library/Caches/typescript/2.9/node_modules/@types/react";
+import React from "react";
 import {
   Platform,
   StyleSheet,
@@ -14,9 +14,9 @@ import {
   CognitoUser,
   AuthenticationDetails
 } from "amazon-cognito-identity-js";
-import { connect } from "../../../../../Library/Caches/typescript/2.9/node_modules/redux";
+import { connect } from "react-redux";
 import { authInfo } from "../../store/actions/authActions";
-import store from "../../store/store";
+import {store} from "../../store/store.js";
 
 class SignUpScreen extends React.Component {
   constructor() {
@@ -26,7 +26,8 @@ class SignUpScreen extends React.Component {
       lastName: "",
       attributeList: [],
       password: "null",
-      routeToConfirm: false
+      routeToConfirm: false,
+      errorSignUp: ""
     };
   }
 
@@ -53,7 +54,11 @@ class SignUpScreen extends React.Component {
     this.state.attributeList.push(attributeGivenName);
 
     var cognitoUser;
-
+console.log('store', store)
+    store.dispatch(authInfo({
+      email: this.state.email,
+      
+    }))
     //call signup function
     this.userPool.signUp(
       this.state.email,
@@ -63,6 +68,9 @@ class SignUpScreen extends React.Component {
       (err, result) => {
         if (err) {
           console.log("error at signup", err);
+          this.setState({
+            error : err.message
+          })
           return;
         }
         cognitoUser = result.user;
@@ -82,12 +90,6 @@ class SignUpScreen extends React.Component {
         />
         <TextInput
           style={styles.input}
-          // autoCapitalize="none"
-          // autoCorrect={false}
-          // keyboardType='email-address'
-          // returnKeyType="next"
-          // placeholder='Email or Mobile Num'
-          // placeholderTextColor='rgba(225,225,225,0.7)'/>
           placeholder="Last Name"
           onChangeText={lastName => this.setState({ lastName })}
         />
@@ -100,16 +102,11 @@ class SignUpScreen extends React.Component {
 
         <TouchableOpacity
           style={styles.button}
-          //   title="Sign Up"
           onPress={() => this.createUserInAmazonCognito()}
         >
           <Text> Sign Up </Text>
         </TouchableOpacity>
-        {/* <Button 
-        title="Already a member? Sign in instead!"
-        color="#841584"
-        onPress={() => this.props.navigation.navigate('SignIn')}
-        /> */}
+        <Text>{this.state.error}</Text>
       </View>
     );
   }
@@ -138,7 +135,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log('state sign up screen', state)
   return {};
 };
 
-export default SignUpScreen;
+export default connect(mapStateToProps, null)(SignUpScreen);
