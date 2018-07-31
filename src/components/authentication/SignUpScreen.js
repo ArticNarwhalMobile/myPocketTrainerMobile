@@ -32,11 +32,8 @@ class SignUpScreen extends React.Component {
   }
 
   userPool;
-  // email = 'hnguyen31@gmail.com';
-  // password = 'Pa$$w0rd';
 
   componentDidMount() {
-    console.log("component did mount");
     //create user pool
     this.userPool = new CognitoUserPool({
       UserPoolId: "us-east-1_QcG34GN2z",
@@ -45,7 +42,6 @@ class SignUpScreen extends React.Component {
   }
 
   createUserInAmazonCognito() {
-    console.log("create user in amazon invoked");
     const attributeGivenName = new CognitoUserAttribute({
       Name: "given_name",
       Value: this.state.lastName
@@ -54,7 +50,6 @@ class SignUpScreen extends React.Component {
     this.state.attributeList.push(attributeGivenName);
 
     var cognitoUser;
-console.log('store', store)
     store.dispatch(authInfo({
       email: this.state.email,
       
@@ -135,7 +130,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log('state sign up screen', state)
   return {};
 };
 
