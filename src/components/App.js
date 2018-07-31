@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Platform
 } from 'react-native';
-import { TabNavigator, TabBarBottom, createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
 import ConfirmScreen from './authentication/ConfirmScreen'
@@ -31,13 +31,12 @@ const SignUpConfirmStack = createStackNavigator({
 });
 
 
-const RootStack = TabNavigator(
+const RootStack = createBottomTabNavigator(
   {
     SignUp: SignUpConfirmStack,
     SignIn: SignInScreen,
   },
   {
-    tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: 'tomato',
