@@ -1,11 +1,92 @@
 --- !com.amazonaws.mobilehub.v0.Project 
 features:
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    components:
+      body-statisticsCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: body-statisticsCRUD
+          requires-signin: true
+          sdk-generation-stage-name: Development
+        paths:
+          /body-statistics: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/bodystatistics-20180811030602.zip
+            description: 'Handler for calls to resource path : /body-statistics/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: Yq2/lqFBfxKQ956+0I+QKvZB+cb+tJovJ2Zv8tGNHJI=
+            memorySize: '128'
+            modified: '2018-08-11T07:07:30.651+0000'
+            name: bodystatistics
+            runtime: nodejs6.10
+            timeout: '3'
+            version: GBeMOIbveExtZyeJpTJSpjwvAtr92WVs
+          '/body-statistics/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/bodystatistics-20180811030602.zip
+            description: 'Handler for calls to resource path : /body-statistics/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: Yq2/lqFBfxKQ956+0I+QKvZB+cb+tJovJ2Zv8tGNHJI=
+            memorySize: '128'
+            modified: '2018-08-11T07:07:30.651+0000'
+            name: bodystatistics
+            runtime: nodejs6.10
+            timeout: '3'
+            version: 9AkoOmyVZEmwOkouRYJ2b9OhZr9b.Fqr
+      sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: sampleCloudApi
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /items: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/sampleLambda-20180811030602.zip
+            description: 'Handler for calls to resource path : /items/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: 5qk7bsXHD2rOEvPncFwgoV0Hoi8+IKOZbtgCBXcWY6U=
+            memorySize: '128'
+            modified: '2018-08-11T07:07:30.559+0000'
+            name: sampleLambda
+            runtime: nodejs6.10
+            timeout: '3'
+            version: LxHLtiz8dOK5XnZuGeGJb1F74Go4cBhF
+          '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/sampleLambda-20180811030602.zip
+            description: 'Handler for calls to resource path : /items/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: 5qk7bsXHD2rOEvPncFwgoV0Hoi8+IKOZbtgCBXcWY6U=
+            memorySize: '128'
+            modified: '2018-08-11T07:07:30.559+0000'
+            name: sampleLambda
+            runtime: nodejs6.10
+            timeout: '3'
+            version: L4Xa0mbMZf8bVLEdGnTwAx4DgNlVH7oY
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
       visibility: public-global
     components:
       release: !com.amazonaws.mobilehub.v0.Bucket {}
+  database: !com.amazonaws.mobilehub.v0.Database 
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              id: S
+              person: S
+              userId: S
+            hashKeyName: userId
+            hashKeyType: S
+            rangeKeyName: id
+            rangeKeyType: S
+            tableName: ___DYNAMIC_PREFIX___-body-statistics
+            tablePrivacy: private
   sign-in: !com.amazonaws.mobilehub.v0.SignIn 
     attributes:
       enabled: true
