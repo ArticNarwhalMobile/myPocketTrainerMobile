@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^2.0.14",
+    "aws-amplify": "^1.0.5",
+    "aws-amplify-react-native": "^1.0.5",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-aws-cognito-js": "0.0.7",
