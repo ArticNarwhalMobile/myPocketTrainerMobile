@@ -1,6 +1,8 @@
 import React from 'react';
 import {
-  Platform
+  Platform,
+  View,
+  Text
 } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
@@ -8,9 +10,10 @@ import { store } from '../store/store';
 import ConfirmScreen from './authentication/ConfirmScreen'
 import SignInScreen from './authentication/SignInScreen'
 import SignUpScreen from './authentication/SignUpScreen'
+import { withAuthenticator } from 'aws-amplify-react-native';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
+import aws_exports from '../aws-exports';
 
 Amplify.configure(aws_exports);
 
@@ -30,40 +33,39 @@ const instructions = Platform.select({
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-const SignUpConfirmStack = createStackNavigator({
-  SignUp: SignUpScreen,
-  Confirm: ConfirmScreen
-});
+// const SignUpConfirmStack = createStackNavigator({
+//   SignUp: SignUpScreen,
+//   Confirm: ConfirmScreen
+// });
 
 
-const RootStack = createBottomTabNavigator(
-  {
-    SignUp: SignUpConfirmStack,
-    SignIn: SignInScreen,
-  },
-  {
-    tabBarPosition: 'bottom',
-    tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-    },
-    animationEnabled: false,
-    swipeEnabled: false,
+// const RootStack = createBottomTabNavigator(
+//   {
+//     SignUp: SignUpConfirmStack,
+//     SignIn: SignInScreen,
+//   },
+//   {
+//     tabBarPosition: 'bottom',
+//     tabBarOptions: {
+//       activeTintColor: 'tomato',
+//       inactiveTintColor: 'gray',
+//     },
+//     animationEnabled: false,
+//     swipeEnabled: false,
   
-  }
-)
+//   }
+// )
 
-export default class App extends React.Component{
+class App extends React.Component{
   render() {
     return (
-      <Provider store={store}>
-         <RootStack/>
-      </Provider>
-           
+         <Text>Hello</Text>           
     )
     
   }
 }
+
+export default withAuthenticator(App);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
